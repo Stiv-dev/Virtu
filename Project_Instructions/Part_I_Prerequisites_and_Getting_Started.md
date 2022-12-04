@@ -111,7 +111,7 @@ aws configure
 aws --version
 ```
 
-A Youtube video is available here
+A Youtube video is available [here](https://youtu.be/5aHsovI2DEk)
 
 # Project Prerequisites
 
