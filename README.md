@@ -47,6 +47,7 @@ Once your database is set up, set the config values for environment variables pr
 ### 2. S3
 
 Create an AWS S3 bucket. The S3 bucket is used to store images that are displayed in Udagram.
+Follow [this guide](https://youtu.be/5aHsovI2DEk) on how to create an S3 bucket and configure an IAM user for this project
 
 Set the config values for environment variables in `set_env.sh`.
 
