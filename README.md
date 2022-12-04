@@ -8,6 +8,8 @@ Project d'étude 4è année - ESIEA-INTECH Virtualisation, Conteneurisation et C
 
 Udagram is a simple application that allows users to register and log into a web client, post photos to the feed, and process photos using an image filtering microservice.
 
+![Udagram Application](udagram.png?raw=true "Udagram Application")
+
 The project is split into two parts:
 
 1. Frontend - Angular web application built with Ionic Framework
