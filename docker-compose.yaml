@@ -1,0 +1,66 @@
+version: '3'
+services:
+  udagramd-db:
+    image: postgres
+    networks:
+      - udagram
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "admin1234"
+      POSTGRES_USER: "admin"
+      POSTGRES_DB: "udagramdb"
+  reverseproxy:
+    image: reverseproxy
+    networks:
+      - udagram
+    ports:
+      - 8080:8080
+    restart: always
+    depends_on:
+      - udagramd-db
+      - backend-user
+      - backend-feed
+  backend-user:
+    depends_on:
+      - udagramd-db
+    image: udagram-api-user
+    networks:
+      - udagram
+    environment:
+      POSTGRES_USERNAME: $POSTGRES_USERNAME
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_HOST: $POSTGRES_HOST
+      AWS_REGION: $AWS_REGION
+      AWS_PROFILE: $AWS_PROFILE
+      AWS_BUCKET: $AWS_BUCKET
+      JWT_SECRET: $JWT_SECRET
+      URL: "http://localhost:8100"
+  backend-feed:
+    depends_on:
+      - udagramd-db
+    image: udagram-api-feed
+    networks:
+      - udagram
+    volumes:
+      - $HOME/.aws:/root/.aws
+    environment:
+      POSTGRES_USERNAME: $POSTGRES_USERNAME
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_HOST: $POSTGRES_HOST
+      AWS_REGION: $AWS_REGION
+      AWS_PROFILE: $AWS_PROFILE
+      AWS_BUCKET: $AWS_BUCKET
+      JWT_SECRET: $JWT_SECRET
+      URL: "http://localhost:8100"
+  frontend:
+    image: udagram-frontend:local
+    networks:
+      - udagram
+    ports:
+      - "8100:80"
+networks:
+  udagram:
+    name: udagram
